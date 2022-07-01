@@ -1,55 +1,34 @@
 <template>
-  <div>
-    <span>全选:</span>
-    <input type="checkbox" v-model="isAll" />
-    <button @click="fn">反选</button>
-    <ul>
-      <li v-for="item in arr" :key="item.name">
-        <input type="checkbox" v-model="item.c" />
-        <span>{{ item.name }}</span>
-      </li>
-    </ul>
-  </div>
+    <div>
+      用户名: <input type="text" v-model="user.username"><br>
+      密码:<input type="text" v-model="user.password">
+    </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      arr: [
-        {
-          name: "猪八戒",
-          c: false,
-        },
-        {
-          name: "孙悟空",
-          c: false,
-        },
-        {
-          name: "唐僧",
-          c: false,
-        },
-        {
-          name: "白龙马",
-          c: false,
-        },
-      ],
-    };
-  },
-  computed: {
-    isAll: {
-      get() {
-        return this.arr.every((item) => item.c);
-      },
-      set(val) {
-        this.arr.forEach((ele) => (ele.c = val));
-      },
+    data(){
+      return{
+        user:{
+          username:'',
+          password:''
+        }
+      }
     },
-  },
-  methods: {
-    fn() {
-      this.arr.forEach((item) => (item.c = !item.c));
-    },
-  },
-};
+    watch:{
+      user:{
+        handler(newval){
+          console.log(newval);
+        },
+        //深侦听
+        deep:true,
+        //立即侦听
+        immediate:true
+      }
+    }
+}
 </script>
+
+<style>
+
+</style>
