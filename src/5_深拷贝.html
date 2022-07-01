@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const _completeDeepClone = (newObj, oldObj = new Map()) => {
+        // 补全代码
+        for (k in oldObj) {
+          const item = oldObj[k]
+          if (item instanceof Array) {
+            newObj[k] = []
+            _completeDeepClone(newObj[k], item)
+          } else if (item instanceof Object) {
+            newObj[k] = {}
+            _completeDeepClone(newObj[k], item)
+          } else {
+            newObj[k] = item
+          }
+        }
+      }
+
+      const oldObj = {
+        id: 1,
+        name: '章三',
+        msg: {
+          sex: '男',
+          age: 18,
+        },
+        color: ['red', 'green', 'yellow'],
+      }
+      const newObj = {}
+      _completeDeepClone(newObj, oldObj)
+      console.log(newObj, oldObj)
+    </script>
+  </body>
+</html>
