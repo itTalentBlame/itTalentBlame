@@ -107,7 +107,6 @@ export default {
       }, 0)
     },
   },
-  watch: {},
 }
 </script>
 
