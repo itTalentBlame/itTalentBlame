@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div>国内粉丝{{ fans | chinaFans(1) }}</div>
-    <div>国外粉丝{{ fans | chinaFans(0) }}</div>
+    <div>国内粉丝{{ fans | chinaFans(3) }}</div>
+    <div>国外粉丝{{ fans | chinaFans(4) }}</div>
     <!-- 处理时间戳 -->
     <div>{{ timer | timerFn("YYYY-MM-DD") }}</div>
     <div>{{ timer | timerFn("YYYY/MM/DD") }}</div>
@@ -13,41 +13,17 @@ import moment from "moment";
 export default {
   data() {
     return {
-      fans: "16876986",
+      fans: 16876986,
       timer: 1636450540055,
     };
   },
   filters: {
-    chinaFans(val, flag) {
-      if (flag) {
-        return (
-          val
-            .split("")
-            .splice(0, val.length - 4)
-            .join("") +
-          "." +
-          val
-            .split("")
-            .splice(val.length - 4)
-            .join("") +
-          "万"
-        );
-      } else {
-        return (
-          val
-            .split("")
-            .splice(0, val.length - 3)
-            .join("") +
-          "." +
-          val
-            .split("")
-            .splice(val.length - 3)
-            .join("") +
-          "千"
-        );
-      }
+    chinaFans(val, index) {
+      return (
+        val / Math.pow(10, index).toFixed(index) + `${index == 3 ? "千" : "万"}`
+      );
     },
-    timerFn(val,end) {
+    timerFn(val, end) {
       return moment(val).format(end);
     },
   },
