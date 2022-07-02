@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const arr = []
+        const obj = {}
+        function fn() {
+
+        }
+        // console.log(arr instanceof Array);
+        // console.log(arr instanceof Object);
+        // console.log(obj instanceof Array);
+        // console.log(obj instanceof Object);
+        var a = 0
+        function isArr(item, type) {
+            if (item.__proto__ === null) return false
+            if (item.__proto__ === type.prototype) return true
+            return isArr(item.__proto__, type)
+        }
+
+        console.log(isArr(fn, Function));
+    </script>
+</body>
+
+</html>
