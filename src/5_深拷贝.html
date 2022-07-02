@@ -36,6 +36,9 @@
       const newObj = {}
       _completeDeepClone(newObj, oldObj)
       console.log(newObj, oldObj)
+
+      const Obj1 = JSON.parse(JSON.stringify(oldObj)) //一行代码 忽略undefined、symbol和函数
+      console.log(Obj1)
     </script>
   </body>
 </html>

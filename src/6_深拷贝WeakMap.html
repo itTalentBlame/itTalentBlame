@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+        运用到的知识点：
+            1. WeakMap: 与Map类似，key为弱引用且只能是对象，垃圾回收机制
+            2. instanceof: 用于判断new出来的引用数据类型 返回布尔值
+            3. typeof: 用于判断基本数据类型，返回字符串，若判断引用数据类型，返回值为object
+            4. constructor：通过原型链查看当前对象的原型对象指回的构造函数
+            5. Symbol：数据类型,作为唯一key，不能被for..in等方法遍历
+            6. Reflect.ownKeys：可遍历Symbol等类型的key，返回值为数组，值为该对象中的所有key
+        
+        基本思路：
+            1. 先判断数据的类型，如果为null，date，正则，Dom元素，则终止操纵并返回
+            2. 如果值为基本数据类型，直接return 返回赋值
+            3. 每次进入后将数据添加到WeakMap，判断是否为首次进入该函数，防止递归进入死循环
+            4. 递归遍历该数据的所有key，添加到新数据中
+
+     -->
+    <script type="text/javascript">
+      // 额外开辟一个存储空间WeakMap来存储当前对象
+      const _completeDeepClone = (target, wm = new WeakMap()) => {
+        // 当target为：null Date 正则 Dom元素 时，终止操作并返回
+        if (target === null) return null
+        if (target instanceof Date) return new Date(target)
+        if (target instanceof RegExp) return new RegExp(target)
+        if (target instanceof HTMLElement) return target
+
+        if (typeof target !== 'object') return target // 当target为基本数据类型时
+
+        if (wm.get(target)) return wm.get(target) // 拷贝对象前去weakMap中查看是否已存在
+        const cloneTarget = new target.constructor() // new一个与target相同的数据类型
+        wm.set(target, cloneTarget) // 把当前target传入wm
+
+        Reflect.ownKeys(target).forEach((key) => {
+          cloneTarget[key] = _completeDeepClone(target[key], wm) // 递归拷贝
+        })
+        return cloneTarget
+      }
+      //
+      //
+      // 测试
+      const obj = {
+        a: true,
+        b: 100,
+        c: 'str',
+        d: undefined,
+        e: null,
+        f: Symbol('f'),
+        g: {
+          g1: {}, // 深层对象
+        },
+        h: [], // 数组
+        i: new Date(), // Date
+        j: /abc/, // 正则
+        k: function () {}, // 函数
+        l: [document.getElementById('foo')], // 引入 WeakMap 的意义，处理可能被清除的 DOM 元素
+      }
+
+      obj.obj = obj // 循环引用
+
+      const name = Symbol('name')
+      obj[name] = 'lin' // Symbol 作为键
+      const newObj = _completeDeepClone(obj)
+
+      console.log(newObj, obj)
+    </script>
+  </body>
+</html>
