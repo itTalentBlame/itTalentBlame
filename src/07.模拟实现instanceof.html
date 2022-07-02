@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function judge(val, type) {
+      type = type.prototype
+      val = val.__proto__
+      while (true) {
+        if (val === null) return false
+        if (val === type) return true
+        val = val.__proto__
+      }
+    }
+
+    const a = []
+    const b = {}
+    const c = function () {}
+    const d = 1425
+
+    console.log(judge(d, Object))
+  </script>
+</html>
