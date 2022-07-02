@@ -11,13 +11,42 @@
 <body>
     <script type="text/javascript">
         // // 请补全JavaScript代码，要求实现对象参数的深拷贝并返回拷贝之后的新对象
-        const _completeDeepClone = (target, map = new Map()) => {
-            //     // 补全代码
+        // const _completeDeepClone = (target, map = new Map()) => {
+        //     // 补全代码
 
-
+        //第三题
+        // }
+        function fn() {
+            console.log(this);//window
         }
-
-
+        const obj = {
+            name: "test",
+            a() {
+                console.log(this.a);//a函数
+                setTimeout(function () {
+                    console.log(this.a);//undefined
+                }, 1000);
+            },
+            b() {
+                console.log(this);//{name: 'test', a: ƒ, b: ƒ}
+                fn();
+            },
+        };
+        obj.a();
+        obj.b();
+        //第二题：
+        // function fn(arr, ele) {
+        //     const obj = arr.prototype;
+        //     const arr = ele.__proto__;
+        //     if (flag) {
+        //         if (ele1 === null) {
+        //             return false
+        //         } else if (ele1 === arr1) {
+        //             return true
+        //         }
+        //         arr = arr.__proto__
+        //     }
+        // }
 
 
 
