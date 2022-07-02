@@ -116,7 +116,7 @@ export default {
       const checkedBuy = this.list.filter((item) => item.buy);
       //将勾选商品的商品
       return checkedBuy.reduce((item, next) => {
-        return item + next.num;
+        return item + next.num * 1;
       }, 0);
     },
     // 选中的价格
@@ -134,6 +134,7 @@ export default {
           if (item.num < 0) {
             item.num = 0;
           }
+          item.num = item.num * 1;
         });
       },
       deep: true,
@@ -170,7 +171,14 @@ export default {
   border: 1px solid black;
   margin-bottom: 10px;
 }
+
+/* 去除number的默认样式 */
 input[type="number"] {
-  -moz-appearance: textfield !important;
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>
